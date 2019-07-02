@@ -17,12 +17,12 @@ typedef struct
 
 struct sl_list
 {
-    void *head;
-    void *tail;
+    NODE *head;
+    NODE *tail;
     size_t size; // number of items on the list
 };
 
-NODE * SL_LIST_create_node(void *item, size_t size);
+NODE *SL_LIST_create_node(const void *item, size_t size);
 
 SL_LIST *SL_LIST_create_list(void)
 {
@@ -36,19 +36,22 @@ SL_LIST *SL_LIST_create_list(void)
     return new_list;
 }
 
-SL_LIST * SL_LIST_delete_list(SL_LIST *list, void *(*delete_position)(void *position, size_t pos_size))
+SL_LIST *SL_LIST_delete_list(SL_LIST *list, void *(*delete_position)(void *position, size_t pos_size))
 {
 
 }
 
-NODE * SL_LIST_create_node(void *item, size_t size)
+__attribute__((weak))
+NODE *SL_LIST_create_node(const void *const item, size_t size)
 {
-    NODE * new_node = malloc(sizeof(NODE));
-    if (new_node == NULL) {
+    NODE *new_node = malloc(sizeof(NODE));
+    if (new_node == NULL)
+    {
         return new_node;
     }
     new_node->item = malloc(size);
-    if (new_node->item == NULL) {
+    if (new_node->item == NULL)
+    {
         free(new_node);
         return NULL;
     }
@@ -58,7 +61,7 @@ NODE * SL_LIST_create_node(void *item, size_t size)
     return new_node;
 }
 
-size_t SL_LIST_size(const SL_LIST * const list)
+size_t SL_LIST_size(const SL_LIST *const list)
 {
     if (list != NULL)
     {
@@ -68,4 +71,24 @@ size_t SL_LIST_size(const SL_LIST * const list)
     {
         return 0;
     }
+}
+
+bool SL_LIST_add_position(SL_LIST *list, const void *const pos, const size_t size)
+{
+    NODE *new_node = SL_LIST_create_node(pos, size);
+    if (new_node == NULL) { return false; }
+
+    if (list->head == NULL)
+    {
+        list->head = new_node;
+        list->tail = new_node;
+    }
+    else
+    {
+        list->tail->next = new_node;
+        list->tail = new_node;
+    }
+
+    list->size++;
+    return true;
 }

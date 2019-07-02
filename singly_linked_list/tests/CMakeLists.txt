@@ -26,6 +26,10 @@ list(APPEND tests_names "test_size")
 list(APPEND tests_flags " ")
 list(APPEND tests_source_files src/test_size.c)
 
+list(APPEND tests_names "test_add_position")
+list(APPEND tests_flags "-Wl,--wrap=SL_LIST_create_node")
+list(APPEND tests_source_files src/test_add_position.c)
+
 
 list(LENGTH tests_names count)
 math(EXPR count "${count} - 1")

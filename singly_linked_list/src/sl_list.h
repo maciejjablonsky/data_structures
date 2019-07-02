@@ -21,5 +21,7 @@ SL_LIST * SL_LIST_delete_list(SL_LIST *list, void *(*delete_position)(void *posi
 
 size_t SL_LIST_size(const SL_LIST *list);
 
+bool SL_LIST_add_position(SL_LIST * list, const void *pos, size_t size);
+
 
 #endif //DATA_STRUCTURES_SL_LIST_H
