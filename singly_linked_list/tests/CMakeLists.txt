@@ -22,6 +22,10 @@ list(APPEND tests_names "test_create_node")
 list(APPEND tests_flags "-Wl,--wrap=malloc -Wl,--wrap=free")
 list(APPEND tests_source_files src/test_create_node.c)
 
+list(APPEND tests_names "test_size")
+list(APPEND tests_flags " ")
+list(APPEND tests_source_files src/test_size.c)
+
 
 list(LENGTH tests_names count)
 math(EXPR count "${count} - 1")
