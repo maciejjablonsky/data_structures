@@ -41,7 +41,7 @@ SL_LIST *SL_LIST_delete_list(SL_LIST *list, void *(*delete_position)(void *posit
 
 }
 
-__attribute__((weak))
+
 NODE *SL_LIST_create_node(const void *const item, size_t size)
 {
     NODE *new_node = malloc(sizeof(NODE));
@@ -91,4 +91,15 @@ bool SL_LIST_add_position(SL_LIST *list, const void *const pos, const size_t siz
 
     list->size++;
     return true;
+}
+
+void * SL_LIST_item_at(const SL_LIST * const list, const size_t index)
+{
+    if (index >= list->size) {return NULL;}
+    NODE * node = list->head;
+    for (size_t i = 0; i < index; ++i)
+    {
+        node = node->next;
+    }
+    return node->item;
 }

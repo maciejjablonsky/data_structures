@@ -35,7 +35,6 @@ static void add_first_item(void **state)
 static void add_second_item(void**state)
 {
     (void)state;
-    NODE * first_node = list.head;
     ITEM pattern_item = {5, 49};
     bool ret = SL_LIST_add_position(&list, &pattern_item, sizeof(ITEM));
     assert_true(ret);

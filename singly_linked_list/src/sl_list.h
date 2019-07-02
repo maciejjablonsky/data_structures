@@ -23,5 +23,8 @@ size_t SL_LIST_size(const SL_LIST *list);
 
 bool SL_LIST_add_position(SL_LIST * list, const void *pos, size_t size);
 
+void * SL_LIST_item_at(const SL_LIST *list, size_t index);
+
+
 
 #endif //DATA_STRUCTURES_SL_LIST_H
