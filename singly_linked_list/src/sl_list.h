@@ -19,7 +19,7 @@ SL_LIST * SL_LIST_create_list(void);
 
 SL_LIST * SL_LIST_delete_list(SL_LIST *list, void *(*delete_position)(void *position, size_t pos_size));
 
-size_t SL_LIST_size(SL_LIST * list);
+size_t SL_LIST_size(const SL_LIST *list);
 
 
 #endif //DATA_STRUCTURES_SL_LIST_H
