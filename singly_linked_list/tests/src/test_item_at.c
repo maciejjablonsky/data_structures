@@ -8,11 +8,7 @@
 #include <cmocka.h>
 #include "../../src/sl_list.c"
 
-typedef struct
-{
-    long a;
-    unsigned long b;
-} ITEM;
+
 
 SL_LIST list = {NULL, NULL, 0};
 ITEM _zero_item = {1, 2};
@@ -50,9 +46,9 @@ static void out_of_range_item(void**state)
 }
 int main(void)
 {
-    SL_LIST_add_position(&list, &_zero_item, sizeof(ITEM));
-    SL_LIST_add_position(&list, &_first_item, sizeof(ITEM));
-    SL_LIST_add_position(&list, &_second_item, sizeof(ITEM));
+    SL_LIST_add_position(&list, &_zero_item);
+    SL_LIST_add_position(&list, &_first_item);
+    SL_LIST_add_position(&list, &_second_item);
     const struct CMUnitTest tests[] = {
         cmocka_unit_test(zero_item),
         cmocka_unit_test(first_item),

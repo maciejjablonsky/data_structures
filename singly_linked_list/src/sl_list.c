@@ -7,13 +7,14 @@
 #include <stdio.h>
 #include <string.h>
 
+typedef struct node NODE;
 
-typedef struct
+struct node
 {
-    void *item;
-    void *next;
-    size_t size;
-} NODE;
+    ITEM item;
+    NODE *next;
+};
+
 
 struct sl_list
 {
@@ -22,7 +23,9 @@ struct sl_list
     size_t size; // number of items on the list
 };
 
-NODE *SL_LIST_create_node(const void *item, size_t size);
+NODE *sl_list_create_node(const ITEM *item);
+
+NODE *sl_list_get_node(const SL_LIST *list, size_t index);
 
 SL_LIST *SL_LIST_create_list(void)
 {
@@ -36,27 +39,15 @@ SL_LIST *SL_LIST_create_list(void)
     return new_list;
 }
 
-SL_LIST *SL_LIST_delete_list(SL_LIST *list, void *(*delete_position)(void *position, size_t pos_size))
-{
 
-}
-
-
-NODE *SL_LIST_create_node(const void *const item, size_t size)
+NODE *sl_list_create_node(const ITEM *item)
 {
     NODE *new_node = malloc(sizeof(NODE));
     if (new_node == NULL)
     {
         return new_node;
     }
-    new_node->item = malloc(size);
-    if (new_node->item == NULL)
-    {
-        free(new_node);
-        return NULL;
-    }
-    memcpy(new_node->item, item, size);
-    new_node->size = size;
+    memcpy(&new_node->item, item, sizeof(ITEM));
     new_node->next = NULL;
     return new_node;
 }
@@ -73,9 +64,9 @@ size_t SL_LIST_size(const SL_LIST *const list)
     }
 }
 
-bool SL_LIST_add_position(SL_LIST *list, const void *const pos, const size_t size)
+bool SL_LIST_add_position(SL_LIST *list, const ITEM *const item)
 {
-    NODE *new_node = SL_LIST_create_node(pos, size);
+    NODE *new_node = sl_list_create_node(item);
     if (new_node == NULL) { return false; }
 
     if (list->head == NULL)
@@ -93,13 +84,70 @@ bool SL_LIST_add_position(SL_LIST *list, const void *const pos, const size_t siz
     return true;
 }
 
-void * SL_LIST_item_at(const SL_LIST * const list, const size_t index)
+ITEM *SL_LIST_item_at(const SL_LIST *const list, const size_t index)
 {
-    if (index >= list->size) {return NULL;}
-    NODE * node = list->head;
+    if (index >= list->size) { return NULL; }
+
+    return &sl_list_get_node(list, index)->item;
+}
+
+NODE *sl_list_get_node(const SL_LIST *const list, const size_t index)
+{
+    NODE *node = list->head;
     for (size_t i = 0; i < index; ++i)
     {
         node = node->next;
     }
-    return node->item;
+    return node;
+}
+
+bool SL_LIST_apply_foreach(SL_LIST *list, ITEM *(*func)(ITEM *item))
+{
+    if (list == NULL || list->head == NULL || func == NULL) { return false; }
+
+    NODE *node = list->head;
+    while (node != NULL)
+    {
+        node->item = *func(&node->item);
+        node = node->next;
+    }
+    return true;
+}
+
+
+bool SL_LIST_delete_item_at(SL_LIST *list, size_t index)
+{
+    if (index >= list->size) { return false; }
+
+    if (index > 0)
+    {
+        NODE * prev_node = sl_list_get_node(list, index - 1);
+        NODE * node_to_delete = prev_node->next;
+        prev_node->next = prev_node->next->next;
+        free(node_to_delete);
+    }
+    else
+    {
+        NODE * node_to_delete = list->head;
+        list->head = list->head->next;
+        free(node_to_delete);
+    }
+    list->size--;
+    return true;
+}
+
+SL_LIST * SL_LIST_delete_list(SL_LIST * list)
+{
+    if (list != NULL)
+    {
+        while(list->size != 0)
+        {
+            if(!SL_LIST_delete_item_at(list, 0))
+            {
+                return list;
+            }
+        }
+        free(list);
+    }
+    return NULL;
 }

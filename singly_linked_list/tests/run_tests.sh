@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INIT="$(pwd)"
+INIT=$(pwd)
 mkdir -p build
 cd build
 cmake ..

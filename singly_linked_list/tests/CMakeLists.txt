@@ -34,6 +34,17 @@ list(APPEND tests_names "test_item_at")
 list(APPEND tests_flags " ")
 list(APPEND tests_source_files src/test_item_at.c)
 
+list(APPEND tests_names "test_apply_foreach")
+list(APPEND tests_flags " ")
+list(APPEND tests_source_files src/test_apply_foreach.c)
+
+list(APPEND tests_names "test_delete_item_at")
+list(APPEND tests_flags " ")
+list(APPEND tests_source_files src/test_delete_item_at.c)
+
+list(APPEND tests_names "test_delete_list")
+list(APPEND tests_flags " ")
+list(APPEND tests_source_files src/test_delete_list.c)
 
 list(LENGTH tests_names count)
 math(EXPR count "${count} - 1")
