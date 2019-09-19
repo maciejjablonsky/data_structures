@@ -8,16 +8,16 @@
 #include <cmocka.h>
 #include "../../src/sl_list.c"
 
+typedef struct
+{
+    int a;
+    int b;
+} TWO_INTS;
+
 void * __real_malloc(size_t);
 void * __wrap_malloc(size_t size)
 {
     return mock_ptr_type(void*);
-}
-
-void __real_free(void * ptr);
-void __wrap_free(void * ptr)
-{
-    function_called();
 }
 
 static void success(void ** state)
@@ -25,21 +25,23 @@ static void success(void ** state)
     (void)state;
     NODE new_node;
 
-    ITEM pattern_item = {11, 'j'};
-    will_return(__wrap_malloc, &new_node);
+    TWO_INTS pattern_item = {11, 'j'};
+    will_return(__wrap_malloc, &new_node); // memory for node
+    will_return(__wrap_malloc, __real_malloc(sizeof(TWO_INTS))); // memory for item
 
-    NODE * tested_node = sl_list_create_node(&pattern_item);
+    NODE *tested_node = sl_list_create_node(&pattern_item, sizeof(TWO_INTS));
     assert_non_null(tested_node);
-    assert_memory_equal(&tested_node->item, &pattern_item, sizeof(ITEM));
+    assert_memory_equal(tested_node->item, &pattern_item, sizeof(TWO_INTS));
+    assert_ptr_not_equal(&pattern_item, new_node.item);
     assert_null(tested_node->next);
 }
 
 static void node_memory_failure(void **state)
 {
     (void)state;
-    will_return(__wrap_malloc, NULL);
-    ITEM pattern_pos = {1, 'a'};
-    NODE * tested_node = sl_list_create_node(&pattern_pos);
+    will_return(__wrap_malloc, NULL); // memory for node
+    TWO_INTS pattern_pos = {1, 'a'};
+    NODE *tested_node = sl_list_create_node(&pattern_pos, sizeof(TWO_INTS));
     assert_null(tested_node);
 }
 

@@ -9,46 +9,52 @@
 #include "../../src/sl_list.c"
 
 
+typedef struct
+{
+    int a;
+    int b;
+} TWO_INTS;
 
-SL_LIST list = {NULL, NULL, 0};
-ITEM _zero_item = {1, 2};
-ITEM _first_item = {3,4};
-ITEM _second_item = {5, 6};
+SL_LIST list = {NULL, NULL, 0, sizeof(TWO_INTS), NULL};
+TWO_INTS _zero_item = {1, 2};
+TWO_INTS _first_item = {3, 4};
+TWO_INTS _second_item = {5, 6};
 
 static void zero_item(void **state)
 {
     (void)state;
-    ITEM * item = SL_LIST_item_at(&list, 0);
-    assert_memory_equal(&_zero_item, item, sizeof(item));
+    TWO_INTS *item = SL_LIST_item_at(&list, 0);
+    assert_memory_equal(&_zero_item, item, list.item_size);
 }
 
 static void first_item(void **state)
 {
     (void)state;
-    ITEM * item = SL_LIST_item_at(&list, 1);
-    assert_memory_equal(&_first_item, item, sizeof(item));
+    void *item = SL_LIST_item_at(&list, 1);
+    assert_memory_equal(&_first_item, item, list.item_size);
 }
 
 static void second_item(void **state)
 {
     (void)state;
-    ITEM * item = SL_LIST_item_at(&list, 2);
-    assert_memory_equal(&_second_item, item, sizeof(item));
+    void *item = SL_LIST_item_at(&list, 2);
+    TWO_INTS item_from_list = *(TWO_INTS *) item;
+    assert_memory_equal(&_second_item, &item_from_list, list.item_size);
 }
 
 static void out_of_range_item(void**state)
 {
     (void)state;
-    ITEM * item = SL_LIST_item_at(&list, 3);
+    void *item = SL_LIST_item_at(&list, 3);
     assert_null(item);
     item = SL_LIST_item_at(&list, 4);
     assert_null(item);
 }
 int main(void)
 {
-    SL_LIST_add_position(&list, &_zero_item);
-    SL_LIST_add_position(&list, &_first_item);
-    SL_LIST_add_position(&list, &_second_item);
+    SL_LIST_add_item(&list, &_zero_item);
+    SL_LIST_add_item(&list, &_first_item);
+    SL_LIST_add_item(&list, &_second_item);
     const struct CMUnitTest tests[] = {
         cmocka_unit_test(zero_item),
         cmocka_unit_test(first_item),

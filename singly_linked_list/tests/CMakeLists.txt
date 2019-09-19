@@ -14,21 +14,21 @@ set(TESTED_SOURCE_DIR ../src)
 
 # tests list DO NOT DELETE THIS LINE
 
-list(APPEND tests_names "test_create_list")
-list(APPEND tests_flags "-Wl,--wrap=malloc -Wl,--wrap=exit")
-list(APPEND tests_source_files src/test_create_list.c)
+list(APPEND tests_names "test_create")
+list(APPEND tests_flags "-Wl,--wrap=malloc")
+list(APPEND tests_source_files src/test_create.c)
 
 list(APPEND tests_names "test_create_node")
-list(APPEND tests_flags "-Wl,--wrap=malloc -Wl,--wrap=free")
+list(APPEND tests_flags "-Wl,--wrap=malloc")
 list(APPEND tests_source_files src/test_create_node.c)
 
 list(APPEND tests_names "test_size")
 list(APPEND tests_flags " ")
 list(APPEND tests_source_files src/test_size.c)
 
-list(APPEND tests_names "test_add_position")
+list(APPEND tests_names "test_add_item")
 list(APPEND tests_flags "-Wl,--wrap=SL_LIST_create_node")
-list(APPEND tests_source_files src/test_add_position.c)
+list(APPEND tests_source_files src/test_add_item.c)
 
 list(APPEND tests_names "test_item_at")
 list(APPEND tests_flags " ")

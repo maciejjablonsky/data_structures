@@ -2,6 +2,7 @@
 
 INIT=$(pwd)
 mkdir -p build
+rm -r build/*
 cd build
 cmake ..
 mkdir -p bin

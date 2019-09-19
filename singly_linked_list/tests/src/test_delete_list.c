@@ -8,16 +8,24 @@
 #include <cmocka.h>
 #include "../../src/sl_list.c"
 
+typedef struct
+{
+    int a;
+    int b;
+} TWO_INTS;
+
 static void delete_three_items_list(void **state)
 {
-    SL_LIST * list = SL_LIST_create_list();
+    SL_LIST *list = SL_LIST_create(sizeof(TWO_INTS), NULL);
     assert_non_null(list);
 
-    ITEM items[] = {{0,0}, {1,1}, {2,2}, };
+    TWO_INTS items[] = {{0, 0},
+                        {1, 1},
+                        {2, 2},};
     size_t size = 3;
     for (size_t i = 0; i < size; ++i)
     {
-        SL_LIST_add_position(list, items + i);
+        SL_LIST_add_item(list, items + i);
     }
 
     list = SL_LIST_delete_list(list);
