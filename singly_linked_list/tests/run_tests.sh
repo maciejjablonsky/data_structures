@@ -7,7 +7,8 @@ cd build
 cmake ..
 mkdir -p bin
 make
-mv test* bin
+
+mv test_* bin
 
 PASSED=0
 ALL=0

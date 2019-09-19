@@ -4,7 +4,6 @@ project(sl_list)
 set(SOURCE_FILES example.c src/sl_list.c)
 
 
-
-add_executable(sl_list ${SOURCE_FILES})
+add_executable(sl_list_example ${SOURCE_FILES})
 
 add_subdirectory(tests)
