@@ -16,7 +16,7 @@ typedef struct
 
 static void delete_second_item(void **state)
 {
-    SL_LIST *list = SL_LIST_create(sizeof(TWO_INTS), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(TWO_INTS), NULL);
     assert_non_null(list);
 
     TWO_INTS items[] = {{0, 0},
@@ -40,7 +40,7 @@ static void delete_second_item(void **state)
 
 static void delete_last_item(void **state)
 {
-    SL_LIST *list = SL_LIST_create(sizeof(TWO_INTS), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(TWO_INTS), NULL);
     assert_non_null(list);
 
     TWO_INTS items[] = {{0, 0},
@@ -64,7 +64,7 @@ static void delete_last_item(void **state)
 
 static void delete_first_item(void ** state)
 {
-    SL_LIST *list = SL_LIST_create(sizeof(TWO_INTS), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(TWO_INTS), NULL);
     assert_non_null(list);
 
     TWO_INTS items[] = {{0, 0},
@@ -88,7 +88,7 @@ static void delete_first_item(void ** state)
 
 static void delete_only_item(void ** state)
 {
-    SL_LIST *list = SL_LIST_create(sizeof(TWO_INTS), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(TWO_INTS), NULL);
     assert_non_null(list);
 
     TWO_INTS items[] = {{0, 0}};

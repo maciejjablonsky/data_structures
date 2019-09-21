@@ -15,7 +15,7 @@ typedef struct
     int b;
 } TWO_INTS;
 
-SL_LIST list = {NULL, NULL, 0, sizeof(TWO_INTS), NULL};
+sl_list_t list = {NULL, NULL, 0, sizeof(TWO_INTS), NULL};
 TWO_INTS _zero_item = {1, 2};
 TWO_INTS _first_item = {3, 4};
 TWO_INTS _second_item = {5, 6};

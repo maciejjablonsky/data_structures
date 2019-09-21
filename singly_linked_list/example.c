@@ -19,8 +19,8 @@ void *print_double(void *item)
 
 int main()
 {
-    SL_LIST *int_list = SL_LIST_create(sizeof(int), NULL);
-    SL_LIST *double_list = SL_LIST_create(sizeof(double), NULL);
+    sl_list_t *int_list = SL_LIST_create(sizeof(int), NULL);
+    sl_list_t *double_list = SL_LIST_create(sizeof(double), NULL);
     for (size_t i = 0; i < 10; ++i)
     {
         double k = (double) i / 3;

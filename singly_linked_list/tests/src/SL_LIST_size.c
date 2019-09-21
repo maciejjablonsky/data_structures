@@ -12,7 +12,7 @@ typedef int INT_ITEM;
 
 static void empty_list(void **state)
 {
-    SL_LIST *list = SL_LIST_create(sizeof(INT_ITEM), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(INT_ITEM), NULL);
     assert_non_null(list);
     assert_int_equal(SL_LIST_size(list), 0);
 }

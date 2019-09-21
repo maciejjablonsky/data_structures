@@ -16,7 +16,7 @@ typedef struct
 
 static void delete_three_items_list(void **state)
 {
-    SL_LIST *list = SL_LIST_create(sizeof(TWO_INTS), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(TWO_INTS), NULL);
     assert_non_null(list);
 
     TWO_INTS items[] = {{0, 0},
