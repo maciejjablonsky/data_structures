@@ -28,6 +28,8 @@ typedef enum
 
 typedef struct sl_list sl_list_t;
 
+typedef enum {COPY_ITEM, COPY_POINTER} copy_type;
+
 
 // returns pointer to initialized list structure or null in case of error
 // item_destructor should be a pointer to your own function that cares about proper deletion of your item
@@ -39,7 +41,7 @@ size_t SL_LIST_size(const sl_list_t *list);
 
 // adds item on the list
 // returns true if everything went fine or false when wrong (doesn't add item then)
-bool SL_LIST_add_item(sl_list_t *list, void *item);
+bool SL_LIST_add_item(sl_list_t *list, void *item, copy_type copy);
 
 // returns pointer to item stored on the list or null in case of non existing index
 void *SL_LIST_item_at(const sl_list_t *list, size_t index);

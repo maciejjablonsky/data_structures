@@ -25,7 +25,7 @@ static void delete_three_items_list(void **state)
     size_t size = 3;
     for (size_t i = 0; i < size; ++i)
     {
-        SL_LIST_add_item(list, items + i);
+        SL_LIST_add_item(list, items + i, COPY_ITEM);
     }
 
     list = SL_LIST_delete_list(list);

@@ -46,7 +46,7 @@ static void test_increment(void **state)
                         {3, 3}};
     for (size_t i = 0; i < 3; ++i)
     {
-        SL_LIST_add_item(list, items + i);
+        SL_LIST_add_item(list, items + i, COPY_ITEM);
     }
 
     SL_LIST_apply_foreach(list, increment);
@@ -75,7 +75,7 @@ static void test_increment_int(void **state)
     int ints[] = {1, 2, 3, 4};
     for (size_t i = 0; i < 4; ++i)
     {
-        SL_LIST_add_item(list, ints + i);
+        SL_LIST_add_item(list, ints + i, COPY_ITEM);
     }
     SL_LIST_apply_foreach(list, increment_int);
     node_t *node = list->head;

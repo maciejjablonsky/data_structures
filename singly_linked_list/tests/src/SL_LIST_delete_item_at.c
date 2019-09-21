@@ -26,7 +26,7 @@ static void delete_second_item(void **state)
     size_t size = 4;
     for (size_t i = 0; i < size; ++i)
     {
-        SL_LIST_add_item(list, items + i);
+        SL_LIST_add_item(list, items + i,COPY_ITEM);
     }
 
     bool ret = SL_LIST_delete_item_at(list, 1);
@@ -50,7 +50,7 @@ static void delete_last_item(void **state)
     size_t size = 4;
     for (size_t i = 0; i < size; ++i)
     {
-        SL_LIST_add_item(list, items + i);
+        SL_LIST_add_item(list, items + i, COPY_ITEM);
     }
 
     SL_LIST_delete_item_at(list, list->size - 1);
@@ -74,7 +74,7 @@ static void delete_first_item(void ** state)
     size_t size = 4;
     for (size_t i = 0; i < size; ++i)
     {
-        SL_LIST_add_item(list, items + i);
+        SL_LIST_add_item(list, items + i, COPY_ITEM);
     }
 
     SL_LIST_delete_item_at(list, 0);
@@ -95,7 +95,7 @@ static void delete_only_item(void ** state)
     size_t size = 1;
     for (size_t i = 0; i < size; ++i)
     {
-        SL_LIST_add_item(list, items + i);
+        SL_LIST_add_item(list, items + i, COPY_ITEM);
     }
 
     SL_LIST_delete_item_at(list, 0);

@@ -52,9 +52,9 @@ static void out_of_range_item(void**state)
 }
 int main(void)
 {
-    SL_LIST_add_item(&list, &_zero_item);
-    SL_LIST_add_item(&list, &_first_item);
-    SL_LIST_add_item(&list, &_second_item);
+    SL_LIST_add_item(&list, &_zero_item, COPY_ITEM);
+    SL_LIST_add_item(&list, &_first_item, COPY_ITEM);
+    SL_LIST_add_item(&list, &_second_item, COPY_ITEM);
     const struct CMUnitTest tests[] = {
         cmocka_unit_test(zero_item),
         cmocka_unit_test(first_item),
