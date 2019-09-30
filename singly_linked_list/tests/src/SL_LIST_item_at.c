@@ -47,7 +47,7 @@ static void out_of_range_item(void**state)
     (void)state;
     void *item = SL_LIST_item_at(&list, 3);
     assert_null(item);
-    item = SL_LIST_item_at(&list, 4);
+    item = SL_LIST_item_at(&list, 4 );
     assert_null(item);
 }
 int main(void)

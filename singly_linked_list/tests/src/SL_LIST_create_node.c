@@ -23,13 +23,13 @@ void * __wrap_malloc(size_t size)
 static void item_copy_success(void **state)
 {
     (void)state;
-    node_t new_node;
+    sl_node_t new_node;
 
     TWO_INTS pattern_item = {11, 'j'};
-    will_return(__wrap_malloc, &new_node); // memory for node
+    will_return(__wrap_malloc, &new_node); // memory for sl_node
     will_return(__wrap_malloc, __real_malloc(sizeof(TWO_INTS))); // memory for item
 
-    node_t *tested_node = sl_list_create_node(&pattern_item, sizeof(TWO_INTS), COPY_ITEM);
+    sl_node_t *tested_node = sl_list_create_node(&pattern_item, sizeof(TWO_INTS), COPY_ITEM);
     assert_non_null(tested_node);
     assert_memory_equal(tested_node->item, &pattern_item, sizeof(TWO_INTS));
     assert_ptr_not_equal(&pattern_item, new_node.item);
@@ -39,14 +39,14 @@ static void item_copy_success(void **state)
 static void pointer_copy_success(void**state)
 {
     (void)state;
-    node_t new_node;
+    sl_node_t new_node;
 
     TWO_INTS * test_item = __real_malloc(sizeof(TWO_INTS));
     assert_non_null(test_item);
     test_item->a = 11;
     test_item->b = 'j';
     will_return(__wrap_malloc, &new_node);
-    node_t * tested_node = sl_list_create_node(test_item, sizeof(TWO_INTS), COPY_POINTER);
+    sl_node_t * tested_node = sl_list_create_node(test_item, sizeof(TWO_INTS), COPY_POINTER);
     assert_non_null(tested_node);
     assert_ptr_equal(test_item, tested_node->item);
     assert_null(tested_node->next);
@@ -55,9 +55,9 @@ static void pointer_copy_success(void**state)
 static void node_memory_failure(void **state)
 {
     (void)state;
-    will_return(__wrap_malloc, NULL); // memory for node
+    will_return(__wrap_malloc, NULL); // memory for sl_node
     TWO_INTS pattern_pos = {1, 'a'};
-    node_t *tested_node = sl_list_create_node(&pattern_pos, sizeof(TWO_INTS), COPY_ITEM);
+    sl_node_t *tested_node = sl_list_create_node(&pattern_pos, sizeof(TWO_INTS), COPY_ITEM);
     assert_null(tested_node);
 }
 

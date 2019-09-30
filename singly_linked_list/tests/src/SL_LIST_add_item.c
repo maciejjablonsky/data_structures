@@ -30,7 +30,7 @@ static void add_first_item(void **state)
     assert_ptr_not_equal(&pattern_item, list.head->item);
     assert_memory_equal(list.head->item, &pattern_item, sizeof(TWO_INTS));
     assert_null(list.head->next);
-    assert_memory_equal(list.head, list.tail, sizeof(node_t));
+    assert_memory_equal(list.head, list.tail, sizeof(sl_node_t));
 }
 
 static void add_second_item(void**state)
@@ -42,7 +42,7 @@ static void add_second_item(void**state)
     assert_int_equal(list.size, 2);
     assert_ptr_not_equal(list.head, list.tail);
     assert_ptr_equal(list.head->next, list.tail);
-    assert_memory_equal(list.head->next, list.tail, sizeof(node_t));
+    assert_memory_equal(list.head->next, list.tail, sizeof(sl_node_t));
 }
 
 static void add_just_pointer(void**state)

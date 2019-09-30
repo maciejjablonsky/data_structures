@@ -50,7 +50,7 @@ static void test_increment(void **state)
     }
 
     SL_LIST_apply_foreach(list, increment);
-    node_t *node = list->head;
+    sl_node_t *node = list->head;
     for (size_t i = 0; i < 3; ++i)
     {
         assert_int_equal(((TWO_INTS) items[i]).a + 1, ((TWO_INTS *) node->item)->a);
@@ -78,7 +78,7 @@ static void test_increment_int(void **state)
         SL_LIST_add_item(list, ints + i, COPY_ITEM);
     }
     SL_LIST_apply_foreach(list, increment_int);
-    node_t *node = list->head;
+    sl_node_t *node = list->head;
     for (size_t i = 0; i < 3; ++i)
     {
         assert_int_equal(ints[i] + 1, *(int *) node->item);
