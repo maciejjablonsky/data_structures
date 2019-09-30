@@ -23,6 +23,7 @@ ALL=0
 FAILED_TESTS=""
 cd "$INIT"
 for FILE in build/bin/* ; do
+    printf "${yel} Running: $(echo ${FILE} | sed 's#.*/##g') ${end}\n"
     ./"$FILE"
     if (( $? == 0 ))  ; then
         PASSED=$((PASSED + 1))
