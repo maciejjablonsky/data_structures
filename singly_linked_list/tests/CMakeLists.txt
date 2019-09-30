@@ -46,6 +46,10 @@ list(APPEND tests_names "test_SL_LIST_delete_list")
 list(APPEND tests_flags " ")
 list(APPEND tests_source_files src/SL_LIST_delete.c)
 
+list(APPEND tests_names "test_sl_list_foreach")
+list(APPEND tests_flags " ")
+list(APPEND tests_source_files src/sl_list_foreach.c)
+
 list(LENGTH tests_names count)
 math(EXPR count "${count} - 1")
 foreach (i RANGE ${count})
