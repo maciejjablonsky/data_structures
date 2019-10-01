@@ -56,8 +56,9 @@ static void doesnt_run_when_empty(void **state)
     (void) state;
     sl_list_t * list = SL_LIST_create(sizeof(size_t), NULL);
     assert_non_null(list);
-    size_t * item;
     bool loop_run = false;
+
+    size_t *item;
     sl_list_foreach(list, item)
     {
         loop_run = true;

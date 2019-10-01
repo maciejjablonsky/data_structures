@@ -47,7 +47,7 @@ struct sl_list
 typedef enum
 {
     COPY_ITEM, COPY_POINTER
-} copy_type;
+} sl_storage_type;
 
 
 /*
@@ -76,9 +76,9 @@ size_t SL_LIST_size(const sl_list_t *list);
  * parameters:
  *  - list: initialized sl_list
  *  - item: address of item
- *  - copy: copy_type value describing whether copy whole item or just a address
+ *  - copy: sl_storage_type value describing whether copy whole item or just a address
  */
-bool SL_LIST_add_item(sl_list_t *list, void *item, copy_type copy);
+bool SL_LIST_add_item(sl_list_t *list, void *item, sl_storage_type info);
 
 /*
  * gets access to i-th item

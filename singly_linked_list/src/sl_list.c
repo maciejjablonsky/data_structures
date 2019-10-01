@@ -5,9 +5,9 @@
 #include "sl_list.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <memory.h>
 
-sl_node_t *sl_list_create_node(void *item, size_t item_size, copy_type copy);
+sl_node_t *sl_list_create_node(void *item, size_t item_size, sl_storage_type info);
 
 sl_node_t *sl_list_get_node(const sl_list_t *list, size_t index);
 
@@ -26,14 +26,14 @@ sl_list_t *SL_LIST_create(size_t item_size, void *(*item_destructor)(void *item_
 }
 
 
-sl_node_t *sl_list_create_node(void *item, size_t item_size, copy_type copy)
+sl_node_t *sl_list_create_node(void *item, size_t item_size, sl_storage_type info)
 {
     sl_node_t *new_node = malloc(sizeof(sl_node_t));
     if (new_node == NULL)
     {
         return new_node;
     }
-    switch(copy)
+    switch (info)
     {
         case COPY_POINTER:
             new_node->item = item;
@@ -67,9 +67,9 @@ size_t SL_LIST_size(const sl_list_t *const list)
 }
 
 
-bool SL_LIST_add_item(sl_list_t *list, void *item, copy_type copy)
+bool SL_LIST_add_item(sl_list_t *list, void *item, sl_storage_type info)
 {
-    sl_node_t *new_node = sl_list_create_node(item, list->item_size, copy);
+    sl_node_t *new_node = sl_list_create_node(item, list->item_size, info);
     if (new_node == NULL) { return false; }
 
     if (list->head == NULL)

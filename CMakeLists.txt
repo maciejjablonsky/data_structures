@@ -8,3 +8,4 @@ set(SOURCE_FILES main.c)
 add_executable(data_structures ${SOURCE_FILES})
 
 add_subdirectory(singly_linked_list)
+add_subdirectory(double_linked_list)
