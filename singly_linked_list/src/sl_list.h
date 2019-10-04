@@ -100,7 +100,7 @@ void *SL_LIST_item_at(const sl_list_t *list, size_t index);
  *              it doesn't have to be the same item, but you should be careful about freeing memory
  *
  */
-bool SL_LIST_apply_foreach(sl_list_t *list, void *(*function)(void *item));
+bool SL_LIST_apply_foreach(const sl_list_t *list, void *(*function)(void *item));
 
 /*
  * deletes i-th item from the list

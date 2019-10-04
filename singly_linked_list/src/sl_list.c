@@ -11,7 +11,7 @@ sl_node_t *sl_list_create_node(void *item, size_t item_size, sl_storage_type inf
 
 sl_node_t *sl_list_get_node(const sl_list_t *list, size_t index);
 
-sl_list_t *SL_LIST_create(size_t item_size, void *(*item_destructor)(void *item_to_delete))
+sl_list_t *SL_LIST_create(const size_t item_size, void *(*item_destructor)(void *item_to_delete))
 {
     sl_list_t *new_list = malloc(sizeof(sl_list_t));
     if (new_list == NULL)
@@ -26,7 +26,7 @@ sl_list_t *SL_LIST_create(size_t item_size, void *(*item_destructor)(void *item_
 }
 
 
-sl_node_t *sl_list_create_node(void *item, size_t item_size, sl_storage_type info)
+sl_node_t *sl_list_create_node(void *const item, const size_t item_size, const sl_storage_type info)
 {
     sl_node_t *new_node = malloc(sizeof(sl_node_t));
     if (new_node == NULL)
@@ -35,12 +35,10 @@ sl_node_t *sl_list_create_node(void *item, size_t item_size, sl_storage_type inf
     }
     switch (info)
     {
-        case COPY_POINTER:
-            new_node->item = item;
+        case COPY_POINTER:new_node->item = item;
             break;
         case COPY_ITEM:
-        default:
-            new_node->item = malloc(item_size);
+        default:new_node->item = malloc(item_size);
             if (new_node->item == NULL)
             {
                 exit(1);
@@ -48,7 +46,7 @@ sl_node_t *sl_list_create_node(void *item, size_t item_size, sl_storage_type inf
             memcpy(new_node->item, item, item_size);
             break;
     }
-    
+
     new_node->next = NULL;
     return new_node;
 }
@@ -67,7 +65,7 @@ size_t SL_LIST_size(const sl_list_t *const list)
 }
 
 
-bool SL_LIST_add_item(sl_list_t *list, void *item, sl_storage_type info)
+bool SL_LIST_add_item(sl_list_t *const list, void *const item, const sl_storage_type info)
 {
     sl_node_t *new_node = sl_list_create_node(item, list->item_size, info);
     if (new_node == NULL) { return false; }
@@ -107,7 +105,7 @@ sl_node_t *sl_list_get_node(const sl_list_t *const list, const size_t index)
 }
 
 
-bool SL_LIST_apply_foreach(sl_list_t *list, void *(*func)(void *))
+bool SL_LIST_apply_foreach(const sl_list_t *const list, void *(*func)(void *))
 {
     if (list == NULL || list->head == NULL || func == NULL) { return false; }
 
@@ -121,7 +119,7 @@ bool SL_LIST_apply_foreach(sl_list_t *list, void *(*func)(void *))
 }
 
 
-bool SL_LIST_delete_item_at(sl_list_t *list, size_t index)
+bool SL_LIST_delete_item_at(sl_list_t *const list, const size_t index)
 {
     if (index >= list->size) { return false; }
 
@@ -158,7 +156,7 @@ bool SL_LIST_delete_item_at(sl_list_t *list, size_t index)
     return true;
 }
 
-sl_list_t *SL_LIST_delete_list(sl_list_t *list)
+sl_list_t *SL_LIST_delete_list(sl_list_t *const list)
 {
     if (list != NULL)
     {
