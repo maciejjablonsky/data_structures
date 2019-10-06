@@ -6,17 +6,7 @@
 #include <setjmp.h>
 #include <stdarg.h>
 #include <cmocka.h>
-#include "../../src/dl_list.c"
-
-static int setup(void **state)
-{
-
-}
-
-static int teardown(void **state)
-{
-
-}
+#include "../../src/dl_list.h"
 
 void *__real_malloc(size_t size);
 
