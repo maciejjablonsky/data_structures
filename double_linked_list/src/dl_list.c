@@ -8,7 +8,7 @@
 
 dl_node_t *dl_list_create_node(void *item, size_t item_size, dl_storage_type info);
 
-dl_list_t *DL_LIST_create(size_t item_size, dl_storage_type info, void *(*destructor)(void *))
+dl_list_t *DL_LIST_create(const size_t item_size, const dl_storage_type info, void *(*destructor)(void *))
 {
     dl_list_t *new_list = malloc(sizeof(dl_list_t));
     if (new_list == NULL)
@@ -22,7 +22,7 @@ dl_list_t *DL_LIST_create(size_t item_size, dl_storage_type info, void *(*destru
     return new_list;
 }
 
-bool DL_LIST_add_item(dl_list_t *list, void *item)
+bool DL_LIST_add_item(dl_list_t *const list, void *const item)
 {
     dl_node_t *new_node = dl_list_create_node(item, list->item_size, list->storage_info);
     if (new_node == NULL) { return false; }
@@ -42,7 +42,7 @@ bool DL_LIST_add_item(dl_list_t *list, void *item)
     return true;
 }
 
-dl_node_t *dl_list_create_node(void *item, size_t item_size, dl_storage_type info)
+dl_node_t *dl_list_create_node(void *const item, const size_t item_size, const dl_storage_type info)
 {
     dl_node_t *new_node = malloc(sizeof(dl_node_t));
     if (new_node == NULL)
@@ -66,4 +66,9 @@ dl_node_t *dl_list_create_node(void *item, size_t item_size, dl_storage_type inf
     }
     new_node->next = new_node->prev = NULL;
     return new_node;
+}
+
+size_t DL_LIST_size(const dl_list_t *const list)
+{
+    return list->size;
 }

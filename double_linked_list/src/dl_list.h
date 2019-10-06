@@ -54,4 +54,13 @@ dl_list_t *DL_LIST_create(size_t item_size, dl_storage_type storage_info, void *
  */
 bool DL_LIST_add_item(dl_list_t *list, void *item);
 
+/*
+ * gets number of items on the list
+ *
+ * return value: size_t number of items
+ * parameters:
+ *  - initialized dl_list
+ */
+size_t DL_LIST_size(const dl_list_t *list);
+
 #endif //DOUBLE_LINKED_LIST_DL_LIST_H
