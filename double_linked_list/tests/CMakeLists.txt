@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD 11)
 
 include_directories(/usr/local/include)
 
-find_library(CMOCKA_LIBRARY libcmocka.so.0)
+find_library(CMOCKA_LIB libcmocka.so.0)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -lcmocka")
 
@@ -14,29 +14,15 @@ set(TESTED_SOURCE_DIR ../src)
 
 # tests list DO NOT DELETE THIS LINE
 
-list(APPEND tests_names "test_DL_LIST_create")
-list(APPEND tests_flags "-Wl,--wrap=malloc")
-list(APPEND tests_source_files src/DL_LIST_create.c)
+# DL_LIST_create()
+set(test test_DL_LIST_create)
+add_executable(${test} src/DL_LIST_create.c ../src/dl_list.c)
+target_link_libraries(${test} ${CMOCKA_LIB} -Wl,--wrap=malloc)
 
-list(APPEND tests_names "test_dl_list_create_node")
-list(APPEND tests_flags "-Wl,--wrap=malloc -Wl,--wrap=exit")
-list(APPEND tests_source_files src/dl_list_create_node.c)
+# dl_list_create_node()
+add_executable(test_dl_list_create_node src/dl_list_create_node.c)
+target_link_libraries(test_dl_list_create_node ${CMOCKA_LIB} -Wl,--wrap=malloc -Wl,--wrap=exit)
 
-list(APPEND tests_names "test_DL_LIST_add_item")
-list(APPEND tests_flags " ")
-list(APPEND tests_source_files src/DL_LIST_add_item.c)
-
-list(LENGTH tests_names count)
-math(EXPR count "${count} - 1")
-foreach (i RANGE ${count})
-    list(GET tests_names ${i} test_name)
-    list(GET tests_flags ${i} test_flags)
-    list(GET tests_source_files ${i} test_source_files)
-    add_executable(${test_name} ${test_source_files})
-    target_link_libraries(${test_name} ${CMOCKA_LIBRARY})
-    if (test_flags STREQUAL " ")
-    else ()
-        target_link_libraries(${test_name} ${test_flags})
-    endif ()
-    #add_test(${test_name} ${test_name})
-endforeach ()
+# DL_LIST_add_item()
+add_executable(test_DL_LIST_add_item src/DL_LIST_add_item.c ../src/dl_list.c)
+target_link_libraries(test_DL_LIST_add_item ${CMOCKA_LIB} -Wl,--wrap=malloc)
