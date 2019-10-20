@@ -121,7 +121,7 @@ bool DL_LIST_delete_item_at(dl_list_t *const list, const size_t index)
         free(node_to_delete->item);
     }
 
-    dl_list_delete_node(list, index);
+    dl_list_delete_node(list, node_to_delete);
     return true;
 }
 
