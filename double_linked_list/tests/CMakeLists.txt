@@ -34,3 +34,7 @@ target_link_libraries(test_DL_LIST_size ${CMOCKA_LIB})
 # dl_list_get_node()
 add_executable(test_dl_get_node src/dl_list_get_node.c)
 target_link_libraries(test_dl_get_node ${CMOCKA_LIB})
+
+# DL_LIST_item_at()
+add_executable(test_DL_LIST_item_at src/DL_LIST_item_at.c ../src/dl_list.c)
+target_link_libraries(test_DL_LIST_item_at ${CMOCKA_LIB})
