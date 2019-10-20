@@ -12,8 +12,7 @@ dl_node_t *dl_list_create_node(void *item, size_t item_size, dl_storage_type inf
 // unguarded
 dl_node_t *dl_list_get_node(dl_list_t *list, size_t dest_index);
 
-// unguarded
-void dl_list_delete_node(dl_list_t *list, size_t index);
+void dl_list_delete_node(dl_list_t *list, dl_node_t *node_to_delete);
 
 dl_list_t *DL_LIST_create(const size_t item_size, const dl_storage_type info, void *(*destructor)(void *))
 {
@@ -95,7 +94,6 @@ dl_node_t *dl_list_get_node(dl_list_t *const list, const size_t dest_index)
     return node;
 }
 
-// TODO add test
 void *DL_LIST_item_at(dl_list_t *list, const size_t index)
 {
     if (index >= list->size)
@@ -108,21 +106,46 @@ void *DL_LIST_item_at(dl_list_t *list, const size_t index)
 // TODO add test
 bool DL_LIST_delete_item_at(dl_list_t *const list, const size_t index)
 {
-    // check index
     if (index >= list->size)
     {
         return false;
     }
+
+    dl_node_t *node_to_delete = dl_list_get_node(list, index);
+    if (list->item_destructor)
+    {
+        list->item_destructor(node_to_delete->item);
+    }
+    else
+    {
+        free(node_to_delete->item);
+    }
+
     dl_list_delete_node(list, index);
     return true;
 }
 
 
 // TODO add test
-void dl_list_delete_node(dl_list_t *const list, const size_t index)
+void dl_list_delete_node(dl_list_t *list, dl_node_t *node_to_delete)
 {
-    dl_node_t *node_to_delete = dl_list_get_node(list, index);
+    if (list->head == node_to_delete)
+    {
+        list->head = node_to_delete->next;
+    }
+    if (list->tail == node_to_delete)
+    {
+        list->tail = node_to_delete->prev;
+    }
 
+    if (node_to_delete->prev)
+    {
+        node_to_delete->prev->next = node_to_delete->next;
+    }
+    if (node_to_delete->next)
+    {
+        node_to_delete->next->prev = node_to_delete->prev;
+    }
 
     free(node_to_delete);
     list->size--;
