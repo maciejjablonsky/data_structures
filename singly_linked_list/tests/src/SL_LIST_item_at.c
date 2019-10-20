@@ -15,7 +15,7 @@ typedef struct
     int b;
 } TWO_INTS;
 
-sl_list_t list = {NULL, NULL, 0, sizeof(TWO_INTS), NULL};
+sl_list_t list = {NULL, NULL, 0, sizeof(TWO_INTS), COPY_ITEM, NULL};
 TWO_INTS _zero_item = {1, 2};
 TWO_INTS _first_item = {3, 4};
 TWO_INTS _second_item = {5, 6};
@@ -52,9 +52,9 @@ static void out_of_range_item(void**state)
 }
 int main(void)
 {
-    SL_LIST_add_item(&list, &_zero_item, COPY_ITEM);
-    SL_LIST_add_item(&list, &_first_item, COPY_ITEM);
-    SL_LIST_add_item(&list, &_second_item, COPY_ITEM);
+    SL_LIST_add_item(&list, &_zero_item);
+    SL_LIST_add_item(&list, &_first_item);
+    SL_LIST_add_item(&list, &_second_item);
     const struct CMUnitTest tests[] = {
         cmocka_unit_test(zero_item),
         cmocka_unit_test(first_item),

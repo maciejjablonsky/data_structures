@@ -38,7 +38,7 @@ void *swap(void *item)
 static void test_increment(void **state)
 {
     (void) state;
-    sl_list_t *list = SL_LIST_create(sizeof(TWO_INTS), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(TWO_INTS), COPY_ITEM, NULL);
     assert_non_null(list);
 
     TWO_INTS items[] = {{1, 1},
@@ -46,7 +46,7 @@ static void test_increment(void **state)
                         {3, 3}};
     for (size_t i = 0; i < 3; ++i)
     {
-        SL_LIST_add_item(list, items + i, COPY_ITEM);
+        SL_LIST_add_item(list, items + i);
     }
 
     SL_LIST_apply_foreach(list, increment);
@@ -69,13 +69,13 @@ void *increment_int(void *item)
 static void test_increment_int(void **state)
 {
     (void) state;
-    sl_list_t *list = SL_LIST_create(sizeof(int), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(int), COPY_ITEM, NULL);
     assert_non_null(list);
 
     int ints[] = {1, 2, 3, 4};
     for (size_t i = 0; i < 4; ++i)
     {
-        SL_LIST_add_item(list, ints + i, COPY_ITEM);
+        SL_LIST_add_item(list, ints + i);
     }
     SL_LIST_apply_foreach(list, increment_int);
     sl_node_t *node = list->head;

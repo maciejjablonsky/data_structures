@@ -15,7 +15,7 @@ typedef struct
     int b;
 } TWO_INTS;
 
-sl_list_t list = {NULL, NULL, 0, sizeof(TWO_INTS), NULL};
+sl_list_t list = {NULL, NULL, 0, sizeof(TWO_INTS), COPY_ITEM, NULL};
 
 static void add_first_item(void **state)
 {
@@ -23,7 +23,7 @@ static void add_first_item(void **state)
     TWO_INTS pattern_item = {12, 423};
 
     sl_list_t *plist = &list;
-    bool ret = SL_LIST_add_item(plist, &pattern_item, COPY_ITEM);
+    bool ret = SL_LIST_add_item(plist, &pattern_item);
     assert_true(ret);
     assert_int_equal(list.size, 1);
     assert_non_null(list.head);
@@ -37,7 +37,7 @@ static void add_second_item(void**state)
 {
     (void)state;
     TWO_INTS pattern_item = {5, 49};
-    bool ret = SL_LIST_add_item(&list, &pattern_item, COPY_ITEM);
+    bool ret = SL_LIST_add_item(&list, &pattern_item);
     assert_true(ret);
     assert_int_equal(list.size, 2);
     assert_ptr_not_equal(list.head, list.tail);
@@ -49,8 +49,8 @@ static void add_just_pointer(void**state)
 {
     (void)state;
     TWO_INTS test_item = {3, 2};
-    sl_list_t * list = SL_LIST_create(sizeof(TWO_INTS), NULL);
-    bool ret_val = SL_LIST_add_item(list, &test_item, COPY_POINTER);
+    sl_list_t *list = SL_LIST_create(sizeof(TWO_INTS), COPY_POINTER, NULL);
+    bool ret_val = SL_LIST_add_item(list, &test_item);
 
     assert_true(ret_val);
     assert_ptr_equal(list->head->item, &test_item);

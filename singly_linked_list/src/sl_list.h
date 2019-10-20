@@ -25,6 +25,12 @@ struct sl_node
 };
 
 
+typedef enum
+{
+    COPY_ITEM, COPY_POINTER
+} sl_storage_type;
+
+
 /*
  * List stores user provided items.
  * User can choose between storing copy or pointer to item when adding.
@@ -37,17 +43,12 @@ struct sl_list
     sl_node_t *tail;
     size_t size; // number of items on the list
     size_t item_size;
-
+    sl_storage_type copy_info;
     void *(*item_destructor)(void *item_to_delete);
 };
 
 
 
-
-typedef enum
-{
-    COPY_ITEM, COPY_POINTER
-} sl_storage_type;
 
 
 /*
@@ -58,7 +59,8 @@ typedef enum
  *  - item_size: size of item in bytes
  *  - item_destructor: pointer to user provided function or NULL when there is no dynamically allocated memory
  */
-sl_list_t *SL_LIST_create(size_t item_size, void *(*item_destructor)(void *item_to_delete));
+sl_list_t *
+SL_LIST_create(size_t item_size, sl_storage_type storage_info, void *(*item_destructor)(void *item_to_delete));
 
 /*
  * returns number of items on the list
@@ -78,7 +80,7 @@ size_t SL_LIST_size(const sl_list_t *list);
  *  - item: address of item
  *  - copy: sl_storage_type value describing whether copy whole item or just a address
  */
-bool SL_LIST_add_item(sl_list_t *list, void *item, sl_storage_type info);
+bool SL_LIST_add_item(sl_list_t *list, void *item);
 
 /*
  * gets access to i-th item
@@ -145,7 +147,7 @@ sl_list_t *SL_LIST_delete_list(sl_list_t *list);
  */
 #define sl_list_foreach(sl_list_ptr, item) \
     for (\
-        sl_node_t *cursor_node_ptr = (sl_list_ptr)->head; \
+        sl_node_t *cursor_node_ptr = (sl_list_ptr)->head;\
         (cursor_node_ptr)\
         && ((item) = (cursor_node_ptr)->item);\
         cursor_node_ptr = cursor_node_ptr->next\

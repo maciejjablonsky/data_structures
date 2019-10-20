@@ -16,7 +16,7 @@ typedef struct
 
 static void delete_three_items_list(void **state)
 {
-    sl_list_t *list = SL_LIST_create(sizeof(TWO_INTS), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(TWO_INTS), COPY_ITEM, NULL);
     assert_non_null(list);
 
     TWO_INTS items[] = {{0, 0},
@@ -25,17 +25,23 @@ static void delete_three_items_list(void **state)
     size_t size = 3;
     for (size_t i = 0; i < size; ++i)
     {
-        SL_LIST_add_item(list, items + i, COPY_ITEM);
+        SL_LIST_add_item(list, items + i);
     }
 
     list = SL_LIST_delete_list(list);
     assert_null(list);
 }
 
+static void delete_null_list(void **state)
+{
+    sl_list_t *list = NULL;
+    SL_LIST_delete_list(list);
+}
+
 int main(void)
 {
     const struct CMUnitTest tests[] = {
-        cmocka_unit_test(delete_three_items_list),
+            cmocka_unit_test(delete_three_items_list), cmocka_unit_test(delete_null_list)
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

@@ -12,12 +12,13 @@ static void success_when_proper_parameters(void **state)
 {
     (void) state;
 
-    sl_list_t *list = SL_LIST_create(sizeof(size_t), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(size_t), COPY_ITEM, NULL);
+    assert_non_null(list);
     for (size_t i = 0; i < 10; ++i)
     {
-        SL_LIST_add_item(list, &i, COPY_ITEM);
+        SL_LIST_add_item(list, &i);
     }
-    assert_non_null(list);
+
     size_t *item;
     size_t i = 0;
 
@@ -31,13 +32,13 @@ static void success_when_proper_parameters(void **state)
 static void does_it_finish_at_last_item(void **state)
 {
     (void) state;
-    sl_list_t * list = SL_LIST_create(sizeof(size_t), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(size_t), COPY_ITEM, NULL);
     size_t k = 2;
-    SL_LIST_add_item(list, &k, COPY_ITEM);
+    SL_LIST_add_item(list, &k);
     k = 13;
-    SL_LIST_add_item(list, &k, COPY_ITEM);
+    SL_LIST_add_item(list, &k);
     k = 27;
-    SL_LIST_add_item(list, &k, COPY_ITEM);
+    SL_LIST_add_item(list, &k);
 
     size_t * item;
     sl_list_foreach(list, item)
@@ -54,7 +55,7 @@ static void does_it_finish_at_last_item(void **state)
 static void doesnt_run_when_empty(void **state)
 {
     (void) state;
-    sl_list_t * list = SL_LIST_create(sizeof(size_t), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(size_t), COPY_ITEM, NULL);
     assert_non_null(list);
     bool loop_run = false;
 

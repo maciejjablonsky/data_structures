@@ -12,7 +12,7 @@ typedef int INT_ITEM;
 
 static void empty_list(void **state)
 {
-    sl_list_t *list = SL_LIST_create(sizeof(INT_ITEM), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(INT_ITEM), COPY_ITEM, NULL);
     assert_non_null(list);
     assert_int_equal(SL_LIST_size(list), 0);
 }
@@ -20,13 +20,13 @@ static void empty_list(void **state)
 static void after_adding_few_items(void**state)
 {
     (void) state;
-    sl_list_t * list = SL_LIST_create(sizeof(int), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(int), COPY_ITEM, NULL);
     assert_non_null(list);
     int n = 3;
 
     for(int i = 0; i < n; ++i)
     {
-        SL_LIST_add_item(list, &i, COPY_ITEM);
+        SL_LIST_add_item(list, &i);
     }
     assert_int_equal(SL_LIST_size(list), n);
 }
@@ -34,14 +34,14 @@ static void after_adding_few_items(void**state)
 static void after_adding_and_deleting(void **state)
 {
     (void)state;
-    sl_list_t * list = SL_LIST_create(sizeof(int), NULL);
+    sl_list_t *list = SL_LIST_create(sizeof(int), COPY_ITEM, NULL);
     assert_non_null(list);
     int n = 5;
     int d = 2;
     assert_true(n>=d);
     for (int i = 0; i < n; ++i)
     {
-        SL_LIST_add_item(list, &i, COPY_ITEM);
+        SL_LIST_add_item(list, &i);
     }
     for (int i = 0; i < d; ++i)
     {
