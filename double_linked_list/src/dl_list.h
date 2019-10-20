@@ -28,7 +28,6 @@ typedef struct
     size_t size;
     size_t item_size;
     dl_storage_type storage_info;
-
     void *(*item_destructor)(void *item_to_delete);
 } dl_list_t;
 
@@ -62,5 +61,29 @@ bool DL_LIST_add_item(dl_list_t *list, void *item);
  *  - initialized dl_list
  */
 size_t DL_LIST_size(const dl_list_t *list);
+
+
+/*
+ * deletes item at index position
+ *
+ * return value: true if item deleted, false otherwise (e.g. index is too big)
+ * parameters:
+ *  - initialized dl_list
+ *  - index of item to delete
+ */
+bool DL_LIST_delete_item_at(dl_list_t *list, size_t index);
+
+
+/*
+ * returns address of item at 'index'
+ *
+ * return value: address of item, or NULL in case of too big index
+ * parameters:
+ *  - initialized dl_list
+ *  - size_t index of item
+ */
+void *DL_LIST_item_at(dl_list_t *list, size_t index);
+
+dl_list_t *DL_LIST_delete(dl_list_t *list);
 
 #endif //DOUBLE_LINKED_LIST_DL_LIST_H

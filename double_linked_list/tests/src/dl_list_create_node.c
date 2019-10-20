@@ -29,11 +29,11 @@ static void dl_list_create_node__success(void **state)
     int item = 2;
     will_return(__wrap_malloc, __real_malloc(sizeof(dl_node_t)));
     will_return(__wrap_malloc, __real_malloc(sizeof(item)));
-    dl_node_t *empty_node = dl_list_create_node(&item, sizeof(int), DL_COPY_ITEM);
-    assert_non_null(empty_node);
-    assert_memory_equal(empty_node->item, &item, sizeof(item));
-    assert_ptr_equal(empty_node->next, NULL);
-    assert_ptr_equal(empty_node->prev, NULL);
+    dl_node_t *node = dl_list_create_node(&item, sizeof(int), DL_COPY_ITEM);
+    assert_non_null(node);
+    assert_memory_equal(node->item, &item, sizeof(item));
+    assert_ptr_equal(node->next, NULL);
+    assert_ptr_equal(node->prev, NULL);
 }
 
 static void dl_list_create_node__memory_failure(void **state)

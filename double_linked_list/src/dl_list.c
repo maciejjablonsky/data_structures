@@ -5,8 +5,15 @@
 #include "dl_list.h"
 #include <stdlib.h>
 #include <memory.h>
+#include <assert.h>
 
 dl_node_t *dl_list_create_node(void *item, size_t item_size, dl_storage_type info);
+
+// unguarded
+dl_node_t *dl_list_get_node(dl_list_t *list, size_t dest_index);
+
+// unguarded
+void dl_list_delete_node(dl_list_t *list, size_t index);
 
 dl_list_t *DL_LIST_create(const size_t item_size, const dl_storage_type info, void *(*destructor)(void *))
 {
@@ -19,11 +26,14 @@ dl_list_t *DL_LIST_create(const size_t item_size, const dl_storage_type info, vo
     new_list->item_size = item_size;
     new_list->storage_info = info;
     new_list->item_destructor = destructor;
+
     return new_list;
 }
 
 bool DL_LIST_add_item(dl_list_t *const list, void *const item)
 {
+    assert(list != NULL);
+
     dl_node_t *new_node = dl_list_create_node(item, list->item_size, list->storage_info);
     if (new_node == NULL) { return false; }
 
@@ -68,7 +78,68 @@ dl_node_t *dl_list_create_node(void *const item, const size_t item_size, const d
     return new_node;
 }
 
+
 size_t DL_LIST_size(const dl_list_t *const list)
 {
+    assert(list != NULL);
     return list->size;
+}
+
+dl_node_t *dl_list_get_node(dl_list_t *const list, const size_t dest_index)
+{
+    dl_node_t *node = list->head;
+    for (size_t i = 0; i < dest_index; ++i)
+    {
+        node = node->next;
+    }
+    return node;
+}
+
+// TODO add test
+void *DL_LIST_item_at(dl_list_t *list, const size_t index)
+{
+    if (index >= list->size)
+    {
+        return NULL;
+    }
+    return dl_list_get_node(list, index)->item;
+}
+
+// TODO add test
+bool DL_LIST_delete_item_at(dl_list_t *const list, const size_t index)
+{
+    // check index
+    if (index >= list->size)
+    {
+        return false;
+    }
+    dl_list_delete_node(list, index);
+    return true;
+}
+
+
+// TODO add test
+void dl_list_delete_node(dl_list_t *const list, const size_t index)
+{
+    dl_node_t *node_to_delete = dl_list_get_node(list, index);
+
+
+    free(node_to_delete);
+    list->size--;
+}
+
+dl_list_t *DL_LIST_delete(dl_list_t *const list)
+{
+    if (list)
+    {
+        while (list->size != 0)
+        {
+            if (!DL_LIST_delete_item_at(list, 0))
+            {
+                return list;
+            }
+        }
+        free(list);
+    }
+    return NULL;
 }
