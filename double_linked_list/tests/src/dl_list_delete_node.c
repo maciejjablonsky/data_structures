@@ -8,7 +8,7 @@
 #include <cmocka.h>
 #include "../../src/dl_list.c"
 
-edl_list_t *list = NULL;
+dl_list_t *list = NULL;
 #define ITEMS_COUNT 10
 
 static int setup(void **state)
@@ -60,6 +60,18 @@ static void dl_list_delete_node__delete_last_node(void **state)
     assert_ptr_equal(node_before_deleted->next, NULL);
 }
 
+static void dl_list_delete_node__delete_only_item(void **state)
+{
+    dl_list_t *private_list = DL_LIST_create(sizeof(int), DL_COPY_ITEM, NULL);
+    int item = 2;
+    DL_LIST_add_item(private_list, &item);
+    dl_node_t *node_to_delete = dl_list_get_node(private_list, 0);
+    dl_list_delete_node(private_list, node_to_delete);
+    assert_null(private_list->head);
+    assert_null(private_list->tail);
+    assert_int_equal(private_list->size, 0);
+}
+
 int main(void)
 {
     struct CMUnitTest tests[] = {cmocka_unit_test_setup_teardown(dl_list_delete_node__delete_1st_node, setup, teardown),
@@ -67,6 +79,6 @@ int main(void)
                                                                  teardown),
                                  cmocka_unit_test_setup_teardown(dl_list_delete_node__delete_last_node, setup,
                                                                  teardown),
-    };
+                                 cmocka_unit_test(dl_list_delete_node__delete_only_item)};
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

@@ -125,8 +125,6 @@ bool DL_LIST_delete_item_at(dl_list_t *const list, const size_t index)
     return true;
 }
 
-
-// TODO add test
 void dl_list_delete_node(dl_list_t *list, dl_node_t *node_to_delete)
 {
     if (list->head == node_to_delete)
