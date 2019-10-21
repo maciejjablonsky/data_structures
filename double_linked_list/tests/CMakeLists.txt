@@ -42,3 +42,7 @@ target_link_libraries(test_DL_LIST_item_at ${CMOCKA_LIB})
 # dl_list_delete_node()
 add_executable(test_dl_list_delete_node src/dl_list_delete_node.c)
 target_link_libraries(test_dl_list_delete_node ${CMOCKA_LIB})
+
+# DL_LIST_delete_item_at()
+add_executable(test_DL_LIST_delete_item_at src/DL_LIST_delete_item_at.c)
+target_link_libraries(test_DL_LIST_delete_item_at ${CMOCKA_LIB})
