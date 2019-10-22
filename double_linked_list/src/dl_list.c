@@ -25,6 +25,9 @@ dl_list_t *DL_LIST_create(const size_t item_size, const dl_storage_type info, vo
     new_list->item_size = item_size;
     new_list->storage_info = info;
     new_list->item_destructor = destructor;
+    new_list->current.node = NULL;
+    new_list->current.i = 0;
+
 
     return new_list;
 }
@@ -40,6 +43,7 @@ bool DL_LIST_add_item(dl_list_t *const list, void *const item)
     {
         list->head = new_node;
         list->tail = new_node;
+        list->current.node = new_node;
     }
     else
     {
@@ -86,12 +90,69 @@ size_t DL_LIST_size(const dl_list_t *const list)
 
 dl_node_t *dl_list_get_node(dl_list_t *const list, const size_t dest_index)
 {
-    dl_node_t *node = list->head;
-    for (size_t i = 0; i < dest_index; ++i)
+    dl_iterator_t *current = &list->current;
+
+    if (current->i == dest_index)
     {
-        node = node->next;
+        return current->node;
     }
-    return node;
+    else if (dest_index == 0)
+    {
+        current->node = list->head;
+        current->i = 0;
+    }
+    else if (dest_index == list->size - 1)
+    {
+        current->node = list->tail;
+        current->i = list->size - 1;
+    }
+    else if (current->i < dest_index)
+    {
+        size_t left = dest_index - current->i;
+        size_t right = list->size - 1 - dest_index;
+        if (left < right)
+        {
+            for (size_t i = 0; i < left; ++i)
+            {
+                current->node = current->node->next;
+                ++current->i;
+            }
+        }
+        else
+        {
+            current->node = list->tail;
+            current->i = list->size - 1;
+            for (size_t i = 0; i < right; ++i)
+            {
+                current->node = current->node->prev;
+                --current->i;
+            }
+        }
+    }
+    else
+    {
+        size_t left = dest_index;
+        size_t right = current->i - dest_index;
+        if (left < right)
+        {
+            current->node = list->head;
+            current->i = 0;
+            for (size_t i = 0; i < left; ++i)
+            {
+                current->node = current->node->next;
+                ++current->i;
+            }
+        }
+        else
+        {
+            for (size_t i = 0; i < right; ++i)
+            {
+                current->node = current->node->prev;
+                --current->i;
+            }
+        }
+    }
+    return current->node;
 }
 
 void *DL_LIST_item_at(dl_list_t *list, const size_t index)
