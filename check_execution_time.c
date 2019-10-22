@@ -4,12 +4,12 @@
 
 #include "check_execution_time.h"
 #include <stdio.h>
-
-void reset_timer(check_time_t *timer)
-{
-    timer->start = 0;
-    timer->end = 0;
-}
+//
+//void reset_timer(check_time_t *timer)
+//{
+//    timer->start = 0;
+//    timer->end = 0;
+//}
 
 void start_timer(check_time_t *timer)
 {
