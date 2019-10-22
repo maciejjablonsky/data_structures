@@ -25,7 +25,7 @@ static int setup(void **state)
 
 static int teardown(void **state)
 {
-    // free list
+    //DL_LIST_delete(list);
     return 0;
 }
 

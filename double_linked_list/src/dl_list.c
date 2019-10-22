@@ -103,7 +103,6 @@ void *DL_LIST_item_at(dl_list_t *list, const size_t index)
     return dl_list_get_node(list, index)->item;
 }
 
-// TODO add test
 bool DL_LIST_delete_item_at(dl_list_t *const list, const size_t index)
 {
     if (index >= list->size)

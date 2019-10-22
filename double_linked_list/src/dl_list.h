@@ -84,6 +84,18 @@ bool DL_LIST_delete_item_at(dl_list_t *list, size_t index);
  */
 void *DL_LIST_item_at(dl_list_t *list, size_t index);
 
+
+/*
+ * deletes whole list
+ *
+ * return value: NULL, or some pointer to list if error occurred
+ * parameters:
+ *  - initialized list
+ *
+ *  example usage:
+ *
+ *  list = DL_LIST_delete(list);
+ */
 dl_list_t *DL_LIST_delete(dl_list_t *list);
 
 #endif //DOUBLE_LINKED_LIST_DL_LIST_H
