@@ -22,6 +22,12 @@ static int setup(void **state)
     return 0;
 }
 
+static int teardown(void **state)
+{
+    DL_LIST_delete(list);
+    return 0;
+}
+
 static void DL_LIST_item_at__get_1st_item(void **state)
 {
     (void) state;
@@ -34,7 +40,7 @@ static void DL_LIST_item_at__get_1st_item(void **state)
 static void DL_LIST_item_at__get_3rd_item(void **state)
 {
     (void) state;
-    assert(ITEMS_COUNT >= 2);
+    static_assert(ITEMS_COUNT >= 2, "");
     int *item = DL_LIST_item_at(list, 2);
     assert_non_null(item);
     assert_int_equal(*item, 2);
@@ -62,13 +68,14 @@ static void DL_LIST_item_at__too_big_index(void **state)
     assert_null(item);
 }
 
+
 int main(void)
 {
-    struct CMUnitTest tests[] = {cmocka_unit_test(DL_LIST_item_at__get_1st_item),
-                                 cmocka_unit_test(DL_LIST_item_at__get_3rd_item),
-                                 cmocka_unit_test(DL_LIST_item_at__get_last_item),
-                                 cmocka_unit_test(DL_LIST_item_at__negative_index),
-                                 cmocka_unit_test(DL_LIST_item_at__too_big_index),
+    struct CMUnitTest tests[] = {cmocka_unit_test_setup_teardown(DL_LIST_item_at__get_1st_item, setup, teardown),
+                                 cmocka_unit_test_setup_teardown(DL_LIST_item_at__get_3rd_item, setup, teardown),
+                                 cmocka_unit_test_setup_teardown(DL_LIST_item_at__get_last_item, setup, teardown),
+                                 cmocka_unit_test_setup_teardown(DL_LIST_item_at__negative_index, setup, teardown),
+                                 cmocka_unit_test_setup_teardown(DL_LIST_item_at__too_big_index, setup, teardown),
 
     };
     return cmocka_run_group_tests(tests, setup, NULL);

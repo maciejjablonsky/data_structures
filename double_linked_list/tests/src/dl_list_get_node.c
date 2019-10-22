@@ -38,7 +38,7 @@ static void dl_list_get_node__get_1st_item(void **state)
 
 static void dl_list_get_node__get_5th_item(void **state)
 {
-    assert(ITEMS_COUNT >= 4);
+    static_assert(ITEMS_COUNT >= 4, "");
     dl_node_t *node = dl_list_get_node(list, 4);
     assert_non_null(node);
     assert_int_equal(*(int *) node->item, 4);
@@ -113,5 +113,5 @@ int main(void)
             /*cmocka_unit_test(dl_list_get_node__too_big_index),
             cmocka_unit_test(dl_list_get_node__negative_index),*/
     };
-    return cmocka_run_group_tests(tests, setup, NULL);
+    return cmocka_run_group_tests(tests, setup, teardown);
 }

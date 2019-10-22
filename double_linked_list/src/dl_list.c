@@ -27,6 +27,7 @@ dl_list_t *DL_LIST_create(const size_t item_size, const dl_storage_type info, vo
     new_list->item_destructor = destructor;
     new_list->current.node = NULL;
     new_list->current.i = 0;
+    new_list->size = 0;
 
 
     return new_list;
@@ -172,6 +173,16 @@ bool DL_LIST_delete_item_at(dl_list_t *list, const size_t index)
     }
 
     dl_node_t *node_to_delete = dl_list_get_node(list, index);
+    if (index < list->size - 1)
+    {
+        dl_list_get_node(list, index + 1);
+        list->current.i--;
+    }
+    else
+    {
+        dl_list_get_node(list, index - 1);
+    }
+
     if (list->item_destructor)
     {
         list->item_destructor(node_to_delete->item);
