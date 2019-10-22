@@ -23,12 +23,20 @@ struct dl_node
 
 typedef struct
 {
+    dl_node_t *node;
+    size_t i;
+} dl_iterator_t;
+
+typedef struct
+{
     dl_node_t *head;
     dl_node_t *tail;
     size_t size;
     size_t item_size;
     dl_storage_type storage_info;
     void *(*item_destructor)(void *item_to_delete);
+
+    dl_iterator_t current;
 } dl_list_t;
 
 

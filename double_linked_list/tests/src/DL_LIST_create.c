@@ -28,6 +28,8 @@ static void create_success(void **state)
     assert_int_equal(list->size, 0);
     assert_ptr_equal(list->item_destructor, (destructor_t *) 0x02);
     assert_ptr_equal(list->storage_info, DL_COPY_ITEM);
+    assert_null(list->current.node);
+    assert_int_equal(list->current.i, 0);
 }
 
 static void create_memory_failure(void **state)
