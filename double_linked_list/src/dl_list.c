@@ -21,7 +21,7 @@ struct dl_list {
     dl_node_t *tail;
     size_t size;
     size_t item_size;
-    dl_storage_type storage_info;
+    dl_storage_type storage_type;
     void *(*item_destructor)(void *item_to_delete);
 
     dl_iterator_t current;
@@ -34,7 +34,9 @@ dl_node_t *dl_list_get_node(dl_list_t *list, size_t dest_index);
 
 void dl_list_delete_node(dl_list_t *list, dl_node_t *node_to_delete);
 
-dl_list_t *DL_LIST_create(const size_t item_size, const dl_storage_type info, void *(*destructor)(void *))
+
+
+dl_list_t *DL_LIST_create(const size_t item_size, const dl_storage_type storage_type, void *(*destructor)(void *))
 {
     dl_list_t *new_list = malloc(sizeof(dl_list_t));
     if (new_list == NULL)
@@ -43,7 +45,7 @@ dl_list_t *DL_LIST_create(const size_t item_size, const dl_storage_type info, vo
     }
     new_list->head = new_list->tail = NULL;
     new_list->item_size = item_size;
-    new_list->storage_info = info;
+    new_list->storage_type = storage_type;
     new_list->item_destructor = destructor;
     new_list->current.node = NULL;
     new_list->current.i = 0;
@@ -57,7 +59,7 @@ bool DL_LIST_add_item(dl_list_t *const list, void *const item)
 {
     assert(list != NULL);
 
-    dl_node_t *new_node = dl_list_create_node(item, list->item_size, list->storage_info);
+    dl_node_t *new_node = dl_list_create_node(item, list->item_size, list->storage_type);
     if (new_node == NULL) { return false; }
 
     if (list->head == NULL)
@@ -254,4 +256,8 @@ dl_list_t *DL_LIST_delete(dl_list_t *const list)
         free(list);
     }
     return NULL;
+}
+
+dl_node_t *dl_list_get_head_node(dl_list_t *this) {
+    return this->head;
 }

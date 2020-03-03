@@ -15,18 +15,16 @@ typedef struct dl_node dl_node_t;
 struct dl_list;
 typedef struct dl_list dl_list_t;
 
-
-
 /*
  * creates initialized double linked list
  *
  * return value: address of initialized dl_list or NULL in case of memory error
  * parameters:
  *  - item_size: size of item in bytes
- *  - storage_info: storage_type enum describing type of item on the list (copy of item or pointer to item)
+ *  - storage_type: storage_type enum describing type of item on the list (copy of item or pointer to item)
  *  - destructor: function handling deleting item, might be NULL when item doesn't have dynamically allocated memory
  */
-dl_list_t *DL_LIST_create(size_t item_size, dl_storage_type storage_info, void *(*destructor)(void *item_to_delete));
+dl_list_t *DL_LIST_create(size_t item_size, dl_storage_type storage_type, void *(*destructor)(void *item_to_delete));
 
 /*
  * adds item at the end of the list
@@ -83,7 +81,6 @@ void *DL_LIST_item_at(dl_list_t *list, size_t index);
  */
 dl_list_t *DL_LIST_delete(dl_list_t *list);
 
-
 /*
  * loop that goes through whole list
  *
@@ -98,13 +95,9 @@ dl_list_t *DL_LIST_delete(dl_list_t *list);
  *      (*item)++;
  * }
  */
-#define dl_list_foreach(dl_list_ptr, own_item) \
-    for (\
-        dl_node_t *cursor_node_ptr = (dl_list_ptr)->head;\
-        (cursor_node_ptr)\
-        && ((own_item) = (cursor_node_ptr)->item);\
-        cursor_node_ptr = cursor_node_ptr->next\
-    )\
-
+#define dl_list_foreach(dl_list_ptr, ___own_item) \
+    for (int __iii = 0;\
+        __iii < DL_LIST_size(dl_list_ptr) && ((___own_item) = DL_LIST_item_at((dl_list_ptr), __iii));\
+        ++__iii)
 
 #endif //DOUBLE_LINKED_LIST_DL_LIST_H
