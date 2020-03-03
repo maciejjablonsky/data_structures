@@ -1,7 +1,3 @@
-//
-// Created by maciek on 01.10.19.
-//
-
 #ifndef DOUBLE_LINKED_LIST_DL_LIST_H
 #define DOUBLE_LINKED_LIST_DL_LIST_H
 
@@ -13,31 +9,12 @@ typedef enum
     DL_COPY_ITEM, DL_COPY_POINTER
 } dl_storage_type;
 
+struct dl_node;
 typedef struct dl_node dl_node_t;
-struct dl_node
-{
-    void *item;
-    dl_node_t *next;
-    dl_node_t *prev;
-};
 
-typedef struct
-{
-    dl_node_t *node;
-    size_t i;
-} dl_iterator_t;
+struct dl_list;
+typedef struct dl_list dl_list_t;
 
-typedef struct
-{
-    dl_node_t *head;
-    dl_node_t *tail;
-    size_t size;
-    size_t item_size;
-    dl_storage_type storage_info;
-    void *(*item_destructor)(void *item_to_delete);
-
-    dl_iterator_t current;
-} dl_list_t;
 
 
 /*

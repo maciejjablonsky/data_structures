@@ -1,11 +1,31 @@
-//
-// Created by maciek on 01.10.19.
-//
-
 #include "dl_list.h"
 #include <stdlib.h>
 #include <memory.h>
 #include <assert.h>
+
+struct dl_node
+{
+    void *item;
+    dl_node_t *next;
+    dl_node_t *prev;
+};
+
+typedef struct
+{
+    dl_node_t *node;
+    size_t i;
+} dl_iterator_t;
+
+struct dl_list {
+    dl_node_t *head;
+    dl_node_t *tail;
+    size_t size;
+    size_t item_size;
+    dl_storage_type storage_info;
+    void *(*item_destructor)(void *item_to_delete);
+
+    dl_iterator_t current;
+};
 
 dl_node_t *dl_list_create_node(void *item, size_t item_size, dl_storage_type info);
 
