@@ -121,11 +121,11 @@ dl_list_t *DL_LIST_delete(dl_list_t *list);
  *      (*item)++;
  * }
  */
-#define dl_list_foreach(dl_list_ptr, item) \
+#define dl_list_foreach(dl_list_ptr, own_item) \
     for (\
         dl_node_t *cursor_node_ptr = (dl_list_ptr)->head;\
         (cursor_node_ptr)\
-        && ((item) = (cursor_node_ptr)->item);\
+        && ((own_item) = (cursor_node_ptr)->item);\
         cursor_node_ptr = cursor_node_ptr->next\
     )\
 
