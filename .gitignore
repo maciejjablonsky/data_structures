@@ -1,0 +1,5 @@
+.vscode
+build
+.idea
+check_execution_time.*
+cmake-build-debug
