@@ -1,8 +1,4 @@
-//
-// Created by maciek on 02.07.19.
-//
-
-#include "sl_list.h"
+#include "singly_linked_list.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <memory.h>
@@ -48,7 +44,7 @@ sl_node_t *sl_list_create_node(void *const item, const size_t item_size, const s
             }
             else
             {
-                fprintf(stderr, "No memory for item in sl_list.\n");
+                fprintf(stderr, "No memory for item in singly_linked_list.\n");
                 exit(2);
             }
 

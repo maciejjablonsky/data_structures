@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.13)
-project(data_structures C)
+project(collections_c VERSION 0.1)
+enable_language(C)
 
-set(CMAKE_C_STANDARD 99)
-add_subdirectory(src/singly_linked_list)
-add_subdirectory(src/double_linked_list)
+set(C_FLAGS "-Wall -Werror --std=c99")
+set(CMAKE_C_FLAGS "${C_FLAGS}")
+enable_testing()
+
+add_subdirectory(src)
+#add_subdirectory(test)
+#add_subdirectory(examples)

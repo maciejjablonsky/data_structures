@@ -6,7 +6,7 @@
 #include <stdarg.h>
 #include <setjmp.h>
 #include <cmocka.h>
-#include "../../src/sl_list.c"
+#include "../../../singly_linked_list.c"
 
 
 typedef struct
